@@ -2,7 +2,7 @@ name: Server CI/CD
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   job:
