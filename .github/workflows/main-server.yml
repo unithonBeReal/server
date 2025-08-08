@@ -52,7 +52,7 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}
           port: ${{ secrets.AWS_SSH_PORT }}
           script: |
-            rm -f ~/server/server-0.0.1-SNAPSHOT.jar
+            rm -f ~/docker/server/server-0.0.1-SNAPSHOT.jar
 
       - name: jar 파일 운영 서버 전송
         uses: appleboy/scp-action@master
@@ -62,7 +62,7 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}
           port: ${{ secrets.AWS_SSH_PORT }}
           source: "server-0.0.1-SNAPSHOT.jar"
-          target: "~/server"
+          target: "~/docker/server"
 
       - name: 이미지 새로 build 및 docker 서버 재실행
         uses: appleboy/ssh-action@master
@@ -72,5 +72,5 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}
           port: ${{ secrets.AWS_SSH_PORT }}
           script: |
-            cd ..
+            cd ~/docker
             docker-compose up --build -d server
