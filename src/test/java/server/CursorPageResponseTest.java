@@ -1,6 +1,5 @@
 package server;
 
-import server.common.response.CursorPageResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

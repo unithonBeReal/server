@@ -6,7 +6,6 @@ import server.common.error_notification.SenderToDiscord;
 import server.member.entity.Member;
 import server.member.entity.MemberRole;
 import server.member.repository.MemberRepository;
-import server.member.service.DeleteMemberService;
 import server.member.util.NicknameGenerator;
 import server.security.auth.dto.AuthResponse;
 import server.security.auth.service.JwtService;
@@ -39,14 +38,10 @@ public class OauthService {
     private final GoogleService googleService;
     private final KakaoService kakaoService;
     private final OAuth2Factory oAuth2Factory;
-    private final DeleteMemberService deleteMemberService;
     private final JwtService jwtService;
     private final SenderToDiscord senderToDiscord;
     private final ObjectMapper objectMapper;
     private final JwtPayloadParser jwtPayloadParser;
-
-    @Value("${profile.default-image}")
-    private String defaultProfileImage;
 
     @Transactional
     public void withdraw(Long memberId) {
@@ -59,7 +54,6 @@ public class OauthService {
             case GOOGLE -> googleService.withdraw(memberId);
         }
 
-        deleteMemberService.deleteMember(memberId);
     }
 
     @Transactional
@@ -116,7 +110,7 @@ public class OauthService {
                 .nickName(NicknameGenerator.getRandomNickname())
                 .role(MemberRole.USER)
                 .birthYear(userInfo.getBirthYear())
-                .profileImage(userInfo.getProfileImageUrl() == "" ? defaultProfileImage : userInfo.getProfileImageUrl())
+                .profileImage(userInfo.getProfileImageUrl())
                 .build();
     }
 }

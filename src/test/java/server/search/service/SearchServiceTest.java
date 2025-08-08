@@ -8,7 +8,6 @@ import static org.mockito.BDDMockito.then;
 
 import server.book.entity.Book;
 import server.book.repository.BookRepository;
-import server.common.response.CursorPageResponse;
 import server.search.dto.SearchBookResponse;
 import server.search.dto.aladin.AladinSearchResponse;
 import server.search.dto.aladin.AladinSearchResponse.SearchItem;
