@@ -243,13 +243,13 @@ public class VeoVideoService {
         }
         
         String videoUrl = uriOpt.get();
-        videoUrl.replace("gs://", "https://storage.cloud.google.com/");
+        String replace = videoUrl.replace("gs://", "https://storage.cloud.google.com/");
 
         log.info("✅ Video[{}] GCS URI: {}", 0, videoUrl);
 
         GeneratedVideo generatedVideo = GeneratedVideo.create(
                 "temp",
-                videoUrl,
+                replace,
                 8
         );
 
