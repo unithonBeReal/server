@@ -1,5 +1,6 @@
 package server.security.auth.api;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import server.common.response.ResponseForm;
 import server.security.auth.dto.AuthResponse;
 import server.security.auth.service.AuthService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 @Tag(name = "jwt", description = "JWT 토큰 발급 관련 API")
+@Hidden
 public class JwtTokenController {
 
     private final AuthService authService;

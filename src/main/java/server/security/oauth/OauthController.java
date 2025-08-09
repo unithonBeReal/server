@@ -1,5 +1,6 @@
 package server.security.oauth;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import server.common.response.ResponseForm;
 import server.security.auth.dto.AuthResponse;
 import server.security.oauth.dto.request.LoginRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
+@Hidden
 public class OauthController {
 
     private final OauthService oauthService;
