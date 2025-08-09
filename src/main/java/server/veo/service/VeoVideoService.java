@@ -1,13 +1,20 @@
 package server.veo.service;
 
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageException;
+import com.google.cloud.storage.StorageOptions;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateVideosConfig;
 import com.google.genai.types.GenerateVideosOperation;
 import com.google.genai.types.Image;
 import com.google.genai.types.Video;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -230,18 +237,19 @@ public class VeoVideoService {
 
         // ✅ storageUri 설정으로 인해 URI 방식으로만 반환됨
         var uriOpt = video.uri();
-        
         if (uriOpt.isEmpty() || uriOpt.get().isEmpty()) {
             log.warn("❌ Video[0].uri()가 비어있습니다 - storageUri 설정 확인 필요");
             return null; // 비디오 생성 실패 처리
         }
         
         String videoUrl = uriOpt.get();
+        videoUrl.replace("gs://", "https://storage.cloud.google.com/");
+
         log.info("✅ Video[{}] GCS URI: {}", 0, videoUrl);
 
         GeneratedVideo generatedVideo = GeneratedVideo.create(
                 "temp",
-                videoUrl,  // ✅ GCS URI 사용
+                videoUrl,
                 8
         );
 
