@@ -5,8 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Spring Web CORS 설정 (해커톤용 단순화)
+ */
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
+public class CorsConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -14,11 +17,7 @@ public class CorsConfig implements WebMvcConfigurer {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOriginPatterns(
-                                "http://localhost:5000",
-                                "http://localhost:3000",
-                                "http://172.31.35.182:8080"
-                        )
+                        .allowedOriginPatterns("*")  // ✅ 해커톤용 모든 Origin 허용
                         .allowedHeaders("*")
                         .exposedHeaders("ACCESS_KEY", "Authorization", "RefreshToken")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS", "PATCH")

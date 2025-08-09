@@ -10,6 +10,7 @@ build/
 
 **/firebase-account.json
 **/application.yml
+**/service-account-key.json
 
 ### STS ###
 .apt_generated

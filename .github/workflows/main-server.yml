@@ -25,6 +25,12 @@ jobs:
           echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
           cat src/main/resources/application.yml
 
+      - name: 구글 키 정보 넣기
+        run: |
+          echo "${{ secrets.GOOGLE_KEY_JSON }}" | base64 --decode > src/main/resources/service-account-key.json
+          cat src/main/resources/service-account-key.json
+
+
       - name: Gradle Caching
         uses: actions/cache@v3
         with:

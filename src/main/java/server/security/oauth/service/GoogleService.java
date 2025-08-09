@@ -23,7 +23,6 @@ import java.security.GeneralSecurityException;
 @Slf4j
 public class GoogleService implements OAuth2Service {
 
-    @Value("${google.client-ids}")
     private List<String> googleClientIds;
 
     @Override

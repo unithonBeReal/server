@@ -22,58 +22,69 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    annotationProcessor 'org.projectlombok:lombok'
-    testCompileOnly 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
+    // Spring Boot Starters
+    implementation 'org.springframework.boot:spring-boot-starter-web'  
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis' 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    
+    // 데이터베이스
     runtimeOnly 'com.mysql:mysql-connector-j'
-    testImplementation 'org.springframework.security:spring-security-test'
-
+    
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
-
-    //Oauth2
+    
+    // OAuth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-
-    //swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-
-    //QueryDSL 추가
+    
+    // WebClient (HTTP 클라이언트)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'  // ✅ WebClient용으로만 유지
+    
+    // Apple 로그인
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.69'
+    
+    // Querydsl
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-    //AWS
+    
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    
+    // Swagger (Spring Web용)
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'  // ✅ WebFlux -> WebMVC로 롤백
+    
+    // AWS
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-
-    //webclient
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-
-    // apple로그인을 위한
-    implementation 'org.bouncycastle:bcpkix-jdk15on:1.69'
-
-    // 레디스
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
+    
     // 모니터링
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
-
+    
     // Ably
     implementation 'io.ably:ably-java:1.2.16'
-
-    //fcm
+    
+    // FCM
     implementation 'com.google.firebase:firebase-admin:9.2.0'
     implementation 'com.google.api-client:google-api-client:2.2.0'
-
+    
+    // Google Gen AI SDK (Veo 비디오 생성용)
+    implementation 'com.google.genai:google-genai:1.10.0'
+    
+    // Google Cloud Storage (Veo 이미지 업로드용)
+    implementation 'com.google.cloud:google-cloud-storage:2.36.1'
+    
+    // ✅ Servlet API 추가 (호환성)
+    implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    
     // 테스트 의존성
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -95,6 +106,8 @@ def generated = 'src/main/generated'
 // querydsl QClass 파일 생성 위치를 지정
 tasks.withType(JavaCompile) {
     options.getGeneratedSourceOutputDirectory().set(file(generated))
+    // Gen AI Function Calling을 위한 매개변수 이름 보존
+    options.compilerArgs += ["-parameters"]
 }
 
 // java source set 에 querydsl QClass 위치 추가

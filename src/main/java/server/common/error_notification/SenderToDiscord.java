@@ -16,6 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * 디스코드 웹훅을 통한 에러 알림 서비스
+ * ✅ WebFlux 호환을 위해 HttpServletRequest를 nullable로 처리합니다.
  */
 @Slf4j
 @Service
@@ -26,6 +27,9 @@ public class SenderToDiscord implements ErrorNotificationService {
     private final ErrorNotificationConfig errorNotificationConfig;
     private final WebClient webClient;
 
+    /**
+     * ✅ WebFlux 호환 - request가 null일 수 있습니다
+     */
     @Override
     public void sendErrorNotification(ErrorCode errorCode, Exception exception, HttpServletRequest request) {
         // 알림이 비활성화되어 있으면 전송하지 않음
@@ -33,8 +37,8 @@ public class SenderToDiscord implements ErrorNotificationService {
             return;
         }
 
-        // 경로가 제외 목록에 있으면 전송하지 않음
-        if (errorNotificationConfig.isPathExcluded(request.getRequestURI())) {
+        // ✅ request가 null이 아닌 경우에만 경로 체크
+        if (request != null && errorNotificationConfig.isPathExcluded(request.getRequestURI())) {
             return;
         }
 
@@ -45,7 +49,10 @@ public class SenderToDiscord implements ErrorNotificationService {
         }
 
         try {
-            ErrorNotificationDto notificationDto = ErrorNotificationDto.create(errorCode, exception, request);
+            // ✅ request가 null인 경우를 고려하여 ErrorNotificationDto 생성
+            ErrorNotificationDto notificationDto = request != null 
+                ? ErrorNotificationDto.create(errorCode, exception, request)
+                : ErrorNotificationDto.createWithoutRequest(errorCode, exception);
 
             sendDiscordNotification(notificationDto);
         } catch (Exception e) {
@@ -137,35 +144,14 @@ public class SenderToDiscord implements ErrorNotificationService {
     }
 
     /**
-     * 간단한 embed 객체 생성
+     * 간단한 embed 생성
      */
     private Map<String, Object> createSimpleEmbed(String title, String message, int color) {
         Map<String, Object> embed = new HashMap<>();
         embed.put("title", title);
-        embed.put("description", truncateMessage(message, 1000)); // 디스코드 description 제한
+        embed.put("description", message);
         embed.put("color", color);
-        embed.put("timestamp", getIsoTimestamp());
+        embed.put("timestamp", ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT));
         return embed;
-    }
-
-    /**
-     * 메시지 길이 제한
-     */
-    private String truncateMessage(String message, int maxLength) {
-        if (message == null) {
-            return "";
-        }
-        if (message.length() <= maxLength) {
-            return message;
-        }
-        return message.substring(0, maxLength - 3) + "...";
-    }
-
-    /**
-     * ISO 타임스탬프 생성
-     */
-    private String getIsoTimestamp() {
-        return ZonedDateTime.now(java.time.ZoneOffset.UTC)
-                .format(DateTimeFormatter.ISO_INSTANT);
     }
 }

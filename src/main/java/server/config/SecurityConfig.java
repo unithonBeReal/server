@@ -24,7 +24,9 @@ public class SecurityConfig {
             "/api/v1/auth/renew",      // 토큰 갱신
             "/swagger-ui/**",       // Swagger UI
             "/v3/api-docs/**",      // Swagger API docs
-            "/actuator/prometheus"  // Prometheus 모니터링
+            "/actuator/prometheus", // Prometheus 모니터링
+            "/api/v1/veo/**"
+
     };
 
     private final JwtService jwtService;

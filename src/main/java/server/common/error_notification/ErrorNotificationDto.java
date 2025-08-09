@@ -72,6 +72,28 @@ public class ErrorNotificationDto {
     }
 
     /**
+     * ✅ WebFlux 호환용 - HttpServletRequest 없이 ErrorNotificationDto 생성
+     */
+    public static ErrorNotificationDto createWithoutRequest(ErrorCode errorCode, Exception exception) {
+        return ErrorNotificationDto.builder()
+                .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .errorCode(errorCode.getCode())
+                .errorMessage(errorCode.getMessage())
+                .exceptionType(exception.getClass().getSimpleName())
+                .exceptionMessage(exception.getMessage())
+                .requestUri("WebFlux Request")
+                .requestMethod("UNKNOWN")
+                .userAgent("N/A")
+                .clientIp("UNKNOWN")
+                .requestParams("N/A")
+                .requestBody("")
+                .requestHeaders("N/A")
+                .stackTrace(getStackTraceAsString(exception))
+                .exceptionChain(buildExceptionChain(exception))
+                .build();
+    }
+
+    /**
      * 예외 체인을 분석하여 상위 예외부터 하위 원인 예외까지 순서대로 구성
      */
     private static List<ExceptionChainDto> buildExceptionChain(Exception exception) {

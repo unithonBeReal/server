@@ -130,7 +130,19 @@ public enum ErrorCode {
     YOUTUBE_API_FORBIDDEN("B1705", "YouTube API에 대한 접근 권한이 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 
     // 외부 API
-    DISCORD_NOTIFICATION_FAILED("B1800", "디스코드 알림 전송에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+    DISCORD_NOTIFICATION_FAILED("B1800", "디스코드 알림 전송에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    // B19xx: Veo 비디오 생성 예외
+    VEO_CLIENT_INITIALIZATION_FAILED("B1900", "Veo 클라이언트 초기화에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    VEO_VIDEO_GENERATION_FAILED("B1901", "비디오 생성에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    VEO_OPERATION_NOT_FOUND("B1902", "비디오 생성 작업을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    VEO_OPERATION_TIMEOUT("B1903", "비디오 생성 작업이 시간 초과되었습니다.", HttpStatus.REQUEST_TIMEOUT),
+    VEO_INVALID_PROMPT("B1904", "프롬프트가 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
+    VEO_INVALID_IMAGE_URL("B1905", "이미지 URL이 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
+    VEO_API_QUOTA_EXCEEDED("B1906", "Veo API 할당량을 초과했습니다.", HttpStatus.TOO_MANY_REQUESTS),
+    VEO_API_UNAUTHORIZED("B1907", "Veo API 인증에 실패했습니다.", HttpStatus.UNAUTHORIZED),
+    VEO_OPERATION_INTERRUPTED("B1908", "비디오 생성 작업이 중단되었습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    VEO_INSUFFICIENT_CREDITS("B1909", "비디오 생성을 위한 크레딧이 부족합니다.", HttpStatus.PAYMENT_REQUIRED);
 
     private final String code;
     private final String message;
