@@ -26,7 +26,4 @@
 # 👥 팀 구성
 | 이윤소(사업화) | 권세인(개발) | 정순원(개발) |  정제훈(개발) | 
 | :------: | :------: | :------: | :------: |
-| [<img src="https://avatars.githubusercontent.com/u/76758126?v=4" height=100 width=100> <br/> @YUNSO99](https://github.com/YUNSO99) |
-[<img src="https://avatars.githubusercontent.com/u/17783561?v=4" height=100 width=100> <br/> @AlphaBs](https://github.com/AlphaBs) |
-[<img src="https://avatars.githubusercontent.com/u/92251131?v=4" height=100 width=100> <br/> @sunwon12](https://github.com/sunwon12) |
-[<img src="https://avatars.githubusercontent.com/u/19837403?v=4" height=100 width=100> <br/> @PeraSite](https://github.com/PeraSite) |
+| [<img src="https://avatars.githubusercontent.com/u/76758126?v=4" height=100 width=100> <br/> @YUNSO99](https://github.com/YUNSO99) | [<img src="https://avatars.githubusercontent.com/u/17783561?v=4" height=100 width=100> <br/> @AlphaBs](https://github.com/AlphaBs) | [<img src="https://avatars.githubusercontent.com/u/92251131?v=4" height=100 width=100> <br/> @sunwon12](https://github.com/sunwon12) | [<img src="https://avatars.githubusercontent.com/u/19837403?v=4" height=100 width=100> <br/> @PeraSite](https://github.com/PeraSite) |
